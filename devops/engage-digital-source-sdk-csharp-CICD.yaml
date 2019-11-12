@@ -8,9 +8,6 @@ trigger:
     include:
     - master
 
-pr:
-  - master
-
 pool: 
   vmImage: ubuntu-latest
 
