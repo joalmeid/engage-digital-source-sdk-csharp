@@ -5,16 +5,15 @@
 ###########################################################################
 
 parameters:
-  vstsFeed: '/c9b259bc-eed9-44de-ac14-7fb9f08f7fe7' # default Azure Artifacts feed id
+  assemblyVersion: '1.0'
   buildProjects: '**/*.csproj'
   buildConfiguration: 'Release'
-  assemblyVersion: '1.0'
-  testProjects: 'test/**/*[Tt]ests/*.csproj'
-  publishProjects: 'src/$(executingProjectName)/$(executingProjectName).csproj'
+  testProjects: '**/*[Tt]ests/*.csproj'
+  publishProjects: '**/*.csproj'
+  publishFeedCredentials: 'Nuget.org'
   publishOutput: $(Build.ArtifactStagingDirectory)
   publishFolder: $(Build.ArtifactStagingDirectory)
   artifactName: 'drop'
-  publishVstsFeed: 'c9b259bc-eed9-44de-ac14-7fb9f08f7fe7'
   packagesToPush: '$(Build.ArtifactStagingDirectory)/**/*.nupkg;!$(Build.ArtifactStagingDirectory)/**/*.symbols.nupkg'
 
 steps:
@@ -26,6 +25,9 @@ steps:
     runtime: 'core'
     updateAssemblyInfo: true
     additionalArguments: '/nocache /ensureassemblyinfo'
+- bash: |
+    #!/bin/bash
+    echo "##vso[build.updatebuildnumber]$(GitVersion.SemVer)"
 - task: UseDotNet@2
   displayName: 'Set up .Net Core 2.2'
   inputs:
@@ -81,7 +83,17 @@ steps:
   inputs:
     command: push
     packagesToPush: ${{parameters.packagesToPush}}
-    nuGetFeedType: 'internal'
-    publishVstsFeed: ${{parameters.publishVstsFeed}}
+    nuGetFeedType: 'external'
+    publishFeedCredentials: ${{parameters.publishFeedCredentials}}
     publishPackageMetadata: true
     versioningScheme: byBuildNumber
+    feedsToUse: 'select'
+  enabled: 'false'
+- task: NuGetCommand@2
+  displayName: 'Push NuGet Package'
+  inputs:
+    command: 'push'
+    packagesToPush: ${{parameters.packagesToPush}}
+    nuGetFeedType: 'external'
+    publishFeedCredentials: ${{parameters.publishFeedCredentials}}
+  

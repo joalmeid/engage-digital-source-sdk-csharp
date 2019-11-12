@@ -1,0 +1,40 @@
+###########################################################################
+# RingCentral Engage Digital for .NET SDK
+# Azure pipeline template to publish nuget package
+###########################################################################
+
+trigger:
+  branches:
+    include:
+    - master
+
+pr:
+  - master
+
+pool: 
+  vmImage: ubuntu-latest
+
+variables:
+  buildConfiguration: Release
+  buildProjects: 'src/**/*SourceSdk*.csproj'
+  testProjects: 'tests/**/*[Tt]ests/*.csproj'
+  publishFeedCredentials: 'Nuget.org'
+
+stages:
+- stage: BuildTestPublishNuget
+  displayName: Build, Test and Publish Nuget Package
+  jobs:
+  - job: BuildAndTestSolutionAndPublishBuildArtifacts
+    displayName: Build and test solution, and publish build artifacts
+    pool: 
+      vmImage: ubuntu-latest
+    steps:
+    - checkout: self
+      clean: true
+    - template: template-nuget-build-publish.yaml
+      parameters:
+        buildProjects: $(buildProjects)
+        buildConfiguration: '$(buildConfiguration)'
+        publishProjects: $(buildProjects)
+        testProjects: $(testProjects)
+        publishFeedCredentials: $(publishFeedCredentials)
