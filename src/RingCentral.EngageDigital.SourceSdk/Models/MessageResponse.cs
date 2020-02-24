@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
 using System;
-
+using System.Collections.Generic;
 
 namespace RingCentral.EngageDigital.SourceSdk.Models
 {
@@ -11,7 +11,7 @@ namespace RingCentral.EngageDigital.SourceSdk.Models
         /// content and the associated filename for each attachment
         /// </summary>
         [JsonProperty("attachments")]
-        public string[] Attachments { get; set; }
+        public List<string> Attachments { get; set; }
 
         /// <summary>
         /// String It has to be a valid content ID if present.

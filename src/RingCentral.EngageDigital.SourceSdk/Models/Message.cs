@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using System.Collections.Generic;
 using System.ComponentModel;
 
 namespace RingCentral.EngageDigital.SourceSdk.Models
@@ -9,7 +10,7 @@ namespace RingCentral.EngageDigital.SourceSdk.Models
         /// Possible actions for this content.
         /// </summary>
         [JsonProperty("actions")]
-        public Action[] Actions { get; set; }
+        public List<Action> Actions { get; set; }
 
         /// <summary>
         /// Array Required unless body is present.An array of objects containing the url or a base64 
@@ -17,7 +18,7 @@ namespace RingCentral.EngageDigital.SourceSdk.Models
         /// </summary>
         /// TODO: check for conditional requirement
         [JsonProperty("attachments")]
-        public string[] Attachments { get; set; }
+        public List<string> Attachments { get; set; }
 
         /// <summary>
         /// Required. An User object.
@@ -37,7 +38,7 @@ namespace RingCentral.EngageDigital.SourceSdk.Models
         /// Example: `["TV", "Internet"]`
         /// </summary>
         [JsonProperty("categories")]
-        public string[] Categories { get; set; }
+        public List<string> Categories { get; set; }
 
         /// <summary>
         /// A full URI where anyone can see the specific comment

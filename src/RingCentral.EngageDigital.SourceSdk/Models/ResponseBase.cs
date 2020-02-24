@@ -23,7 +23,7 @@ namespace RingCentral.EngageDigital.SourceSdk.Models
         /// Example: `["TV", "Internet"]`
         /// </summary>
         [JsonProperty("categories")]
-        public string[] Categories { get; set; }
+        public List<string> Categories { get; set; }
 
         /// <summary>
         /// Supported formats: `2012-02-10`, `2012-10-01T17:18:40Z` (ISO 8601)

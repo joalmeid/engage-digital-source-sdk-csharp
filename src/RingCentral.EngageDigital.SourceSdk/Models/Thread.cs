@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using System.Collections.Generic;
 using System.ComponentModel;
 
 namespace RingCentral.EngageDigital.SourceSdk.Models
@@ -9,7 +10,7 @@ namespace RingCentral.EngageDigital.SourceSdk.Models
         /// Possible actions for this content.
         /// </summary>
         [JsonProperty("actions")]
-        public Action[] Actions { get; set; }
+        public List<Action> Actions { get; set; }
 
         /// <summary>
         /// Required. An User object.
@@ -29,7 +30,7 @@ namespace RingCentral.EngageDigital.SourceSdk.Models
         /// Example: `["TV", "Internet"]`
         /// </summary>
         [JsonProperty("categories")]
-        public string[] Categories { get; set; }
+        public List<string> Categories { get; set; }
 
         /// <summary>
         /// A full URI where anyone can see the specific comment
